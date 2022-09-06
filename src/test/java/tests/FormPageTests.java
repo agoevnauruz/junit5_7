@@ -3,8 +3,12 @@ package tests;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.jupiter.params.provider.ValueSource;
+
+import java.util.stream.Stream;
 
 import static tests.TestData.*;
 
@@ -82,5 +86,30 @@ public class FormPageTests extends TestBase {
                 .checkResult("Student Name", firstName + " " + lastName)
                 .checkResult("Gender", gender)
                 .checkResult("Mobile", phone);
+    }
+
+    public static Stream<Arguments> methodSource() {
+        return Stream.of(
+                Arguments.of("Sports", "Sports"),
+                Arguments.of("Reading", "Reading")
+        );
+    }
+    @DisplayName("Parameterized Test With Method Source")
+    @ParameterizedTest(name = "При выборе хобби {0} в форме должно быть {1}")
+    @MethodSource(value = "methodSource")
+    public void parameterizedTestWithMethodSource(String searchData, String expectedResult){
+        regitrsationFormPage
+                .setFirstName(firstName)
+                .setLastName(lastName)
+                .setHobbies(searchData)
+                .setUserNumber(searchData)
+                .setSubmit();
+        regitrsationFormPage
+                .checkFormOpen("Thanks for submitting the form")
+                .checkResult("Student Name", firstName + " " + lastName)
+                .checkResult("Hobbies", expectedResult)
+                .checkResult("Mobile", expectedResult)
+                .setSubmit();
+
     }
 }
