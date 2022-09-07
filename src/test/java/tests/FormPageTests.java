@@ -59,7 +59,7 @@ public class FormPageTests extends TestBase {
                 .setGender("Other")
                 .setUserNumber(valueSource)
                 .setSubmit();
-        regitrsationFormPage.openPage()
+        regitrsationFormPage
                 .checkFormOpen("Thanks for submitting the form")
                 .checkResult("Student Name", testData.firstName + " " + testData.lastName)
                 .checkResult("Gender", "Other")
@@ -81,7 +81,7 @@ public class FormPageTests extends TestBase {
                 .setGender(gender)
                 .setUserNumber(phone)
                 .setSubmit();
-        regitrsationFormPage.openPage()
+        regitrsationFormPage
                 .checkFormOpen("Thanks for submitting the form")
                 .checkResult("Student Name", firstName + " " + lastName)
                 .checkResult("Gender", gender)
@@ -97,18 +97,20 @@ public class FormPageTests extends TestBase {
     }
     @DisplayName("Parameterized Test With Method Source")
     @ParameterizedTest(name = "При выборе хобби {0} в форме должно быть {1}")
-    @MethodSource(value = "methodSource")
+    @MethodSource("methodSource")
     public void parameterizedTestWithMethodSource(String searchData, String expectedResult){
         regitrsationFormPage.openPage()
                 .setFirstName(firstName)
                 .setLastName(lastName)
                 .setGender("Other")
+                .setUserNumber(userNumber)
                 .setHobbies(searchData)
                 .setSubmit();
-        regitrsationFormPage.openPage()
+        regitrsationFormPage
                 .checkFormOpen("Thanks for submitting the form")
                 .checkResult("Student Name", firstName + " " + lastName)
                 .setGender("Other")
+                .setUserNumber("Mobile")
                 .checkResult("Hobbies", expectedResult);
 
     }
