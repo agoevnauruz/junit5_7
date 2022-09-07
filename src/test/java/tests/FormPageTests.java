@@ -110,7 +110,7 @@ public class FormPageTests extends TestBase {
                 .checkFormOpen("Thanks for submitting the form")
                 .checkResult("Student Name", firstName + " " + lastName)
                 .setGender("Other")
-                .setUserNumber("Mobile")
+                .setUserNumber(expectedResult)
                 .checkResult("Hobbies", expectedResult);
 
     }
