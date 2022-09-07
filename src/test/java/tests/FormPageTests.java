@@ -54,14 +54,14 @@ public class FormPageTests extends TestBase {
     })
     public void parameterizedTestWithValueSource(String valueSource) {
         regitrsationFormPage.openPage()
-                .setFirstName(testData.firstName)
-                .setLastName(testData.lastName)
+                .setFirstName(firstName)
+                .setLastName(lastName)
                 .setGender("Other")
                 .setUserNumber(valueSource)
                 .setSubmit();
         regitrsationFormPage
                 .checkFormOpen("Thanks for submitting the form")
-                .checkResult("Student Name", testData.firstName + " " + testData.lastName)
+                .checkResult("Student Name", firstName + " " + lastName)
                 .checkResult("Gender", "Other")
                 .checkResult("Mobile", valueSource);
     }
@@ -109,8 +109,8 @@ public class FormPageTests extends TestBase {
         regitrsationFormPage
                 .checkFormOpen("Thanks for submitting the form")
                 .checkResult("Student Name", firstName + " " + lastName)
-                .setGender("Other")
-                .setUserNumber(userNumber)
+                .checkResult("Gender", "Other")
+                .checkResult("Mobile", userNumber)
                 .checkResult("Hobbies", expectedResult);
 
     }
