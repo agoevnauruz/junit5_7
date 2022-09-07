@@ -53,13 +53,13 @@ public class FormPageTests extends TestBase {
             "9172345678"
     })
     public void parameterizedTestWithValueSource(String valueSource) {
-        regitrsationFormPage
+        regitrsationFormPage.openPage()
                 .setFirstName(testData.firstName)
                 .setLastName(testData.lastName)
                 .setGender("Other")
                 .setUserNumber(valueSource)
                 .setSubmit();
-        regitrsationFormPage
+        regitrsationFormPage.openPage()
                 .checkFormOpen("Thanks for submitting the form")
                 .checkResult("Student Name", testData.firstName + " " + testData.lastName)
                 .checkResult("Gender", "Other")
@@ -75,13 +75,13 @@ public class FormPageTests extends TestBase {
             "Alex, Arest, Other, 9172345678"
     })
     public void parameterizedTestWithCSVSource(String firstName, String lastName, String gender, String phone) {
-        regitrsationFormPage
+        regitrsationFormPage.openPage()
                 .setFirstName(firstName)
                 .setLastName(lastName)
                 .setGender(gender)
                 .setUserNumber(phone)
                 .setSubmit();
-        regitrsationFormPage
+        regitrsationFormPage.openPage()
                 .checkFormOpen("Thanks for submitting the form")
                 .checkResult("Student Name", firstName + " " + lastName)
                 .checkResult("Gender", gender)
@@ -91,25 +91,25 @@ public class FormPageTests extends TestBase {
     public static Stream<Arguments> methodSource() {
         return Stream.of(
                 Arguments.of("Sports", "Sports"),
-                Arguments.of("Reading", "Reading")
+                Arguments.of("Reading", "Reading"),
+                Arguments.of("Music", "Music")
         );
     }
     @DisplayName("Parameterized Test With Method Source")
     @ParameterizedTest(name = "При выборе хобби {0} в форме должно быть {1}")
     @MethodSource(value = "methodSource")
     public void parameterizedTestWithMethodSource(String searchData, String expectedResult){
-        regitrsationFormPage
+        regitrsationFormPage.openPage()
                 .setFirstName(firstName)
                 .setLastName(lastName)
+                .setGender("Other")
                 .setHobbies(searchData)
-                .setUserNumber(searchData)
                 .setSubmit();
-        regitrsationFormPage
+        regitrsationFormPage.openPage()
                 .checkFormOpen("Thanks for submitting the form")
                 .checkResult("Student Name", firstName + " " + lastName)
-                .checkResult("Hobbies", expectedResult)
-                .checkResult("Mobile", expectedResult)
-                .setSubmit();
+                .setGender("Other")
+                .checkResult("Hobbies", expectedResult);
 
     }
 }
